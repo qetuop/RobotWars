@@ -18,6 +18,8 @@
 #include "Bullet.h"
 #include "Character.h"
 
+#include "Texture.h"
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -35,15 +37,23 @@ extern "C" {
         int frame; // FRAME_COUNT = 3; = 0 1 2 0 1 2
         
         //int direction; // N = 3, E = 2, S = 0, W = 1
+        
+        Texture *texture;
+        std::string head;
+        std::string torso;
+        std::string leftArm;
+        std::string rightArm;
+        std::string leg;
 
     public:
         Player();
         ~Player();
              
-
+        
         void handle_input(SDL_GameController *controller);
 
         SDL_Rect getClip();
+        Texture* getTexture(SDL_Renderer* Renderer);
         
         virtual bool move();
         

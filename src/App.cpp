@@ -115,8 +115,8 @@ bool App::Init( ) {
     Texture *texture = TextureBank::Get("somecharacters");
     if ( texture != nullptr ) {
         mPlayerPtr = std::make_shared<Player>();
-        mPlayerPtr->setWidth(32);
-        mPlayerPtr->setHeight(32);
+        mPlayerPtr->setWidth(30);
+        mPlayerPtr->setHeight(30);
     }
 
     return true;
@@ -162,12 +162,14 @@ void App::Render( ) {
     }
 
     // Players
-    texture = TextureBank::Get(mPlayerPtr->getSpriteName());
+    //texture = TextureBank::Get(mPlayerPtr->getSpriteName());
+    texture = mPlayerPtr->getTexture(Renderer);
+    
     if ( texture != nullptr ) {
 
-        SDL_Rect clip = mPlayerPtr->getClip();
-        texture->render(Renderer, mPlayerPtr->mPosX, mPlayerPtr->mPosY,
-                &clip, mPlayerPtr->mFaceDirection);
+        //SDL_Rect clip = mPlayerPtr->getClip();
+        //texture->render(Renderer, mPlayerPtr->mPosX, mPlayerPtr->mPosY,
+        //        &clip, mPlayerPtr->mFaceDirection);
     } else {
         logSDLError(std::cout, "App1::Render");
     }
@@ -182,7 +184,9 @@ void App::Render( ) {
     // 16:9 aspect ratio resolutions:  1024×576, 1152×648, 1280×720, 1366×768, 1600×900, 1920×1080, 2560×1440 and 3840×2160.
     
     // 4:3
-    SDL_RenderSetLogicalSize(Renderer, 640, 480);
+    SDL_RenderSetLogicalSize(Renderer, 320, 240);
+    //SDL_RenderSetLogicalSize(Renderer, 400, 300);
+    //SDL_RenderSetLogicalSize(Renderer, 640, 480);
     //SDL_RenderSetLogicalSize(Renderer, 800, 600);
     //SDL_RenderSetLogicalSize(Renderer, 1024, 768);
     

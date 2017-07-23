@@ -12,13 +12,19 @@
 
 //static int doOnce = 1;
 const int FRAME_COUNT = 3;
-const int SPEED = 8;
+const int SPEED = 16;
 
 Player::Player( ) {
     std::cout << "Player created " << std::endl;
 
     frame = 0;
     mSpriteName = "somecharacters" ;
+    
+    head = "head";
+    torso = "torso";
+    leftArm = "left_arm";
+    rightArm = "right_arm";
+    leg = "leg";
 }
 
 Player::~Player( ) {
@@ -75,7 +81,7 @@ void Player::handle_input( SDL_GameController *controller ) {
         else if ( mFaceDirection > 45 && mFaceDirection < 135 ) mFaceDirection = 90;
         
         std::cout << "mFaceDirection:  " << mFaceDirection << std::endl;
-        
+        mFaceDirection = 0;
         //fireBullet();
     }
 
@@ -92,6 +98,13 @@ void Player::handle_input( SDL_GameController *controller ) {
 
     if ( RightShoulder == 1 ) {
 //        fireBullet();
+    }
+    
+    if ( AButton == 1 ) {
+        rightArm = "right_arm";
+    }
+    if ( BButton == 1 ) {
+        rightArm = "right_arm2";
     }
 
     // ------------------
@@ -148,16 +161,18 @@ void Player::handle_input( SDL_GameController *controller ) {
 
     SDL_Rect Player::getClip() {
         SDL_Rect clip;
+        int CLIP_SIZE = 30;
         
         // frame 
-        clip.x = frame*32;
-        //std::cout << "FRAME= " << frame << std::endl;
+        //clip.x = frame*CLIP_SIZE;
+        clip.x = (frame / FRAME_COUNT) * getWidth();
+        std::cout << "FRAME= " << frame << std::endl;
         
         // mMoveDirection
         int y = 0;
         switch ( (int)mMoveDirection ) {
-            case 0:
-                y = 64;
+            case 0:  // EAST
+                y = CLIP_SIZE*2;
                 break;
                 
            case 90:
@@ -165,23 +180,54 @@ void Player::handle_input( SDL_GameController *controller ) {
                 break;
                 
             case -90:
-                y = 96;
+                y = CLIP_SIZE*3;
                 break;
                 
-            case 180:
-                y = 32;
+            case 180: // WEST
+                y = CLIP_SIZE;
                 break;
         }
         clip.y = y;
         
-        clip.h=32;
-        clip.w=32;
+        clip.h=CLIP_SIZE;
+        clip.w=CLIP_SIZE;
         
         // mFaceDirection
         
         return clip;
     }
 
+    Texture* Player::getTexture(SDL_Renderer* Renderer) {
+        texture = new Texture();
+        
+        Texture *headTx = TextureBank::Get(head);
+        Texture *torsoTx = TextureBank::Get(torso);
+        Texture *leftArmTx = TextureBank::Get(leftArm);
+        Texture *rightArmTx = TextureBank::Get(rightArm);
+        Texture *legTx = TextureBank::Get(leg);
+        
+        SDL_Rect clip = getClip();
+        
+        headTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+        torsoTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+        
+        if ( (int)mMoveDirection == 0 ) {
+            rightArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+            leftArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+        }
+        else {
+            leftArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+            rightArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+        }
+                
+        legTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+        
+       
+        
+        
+        return texture;
+    }
+    
 std::string Player::getSpriteName() {
     return mSpriteName;// + std::to_string(frame);
 }
@@ -191,11 +237,15 @@ bool Player::move() {
     
     // TODO: better way
     if ( mVelX != 0 || mVelY != 0) {
-        frame = ++frame % FRAME_COUNT;
-//        ++frame;
-//        if ( frame / 3 >= FRAME_COUNT*2 ) {
-//            frame = 0;
-//        }
+        //frame = ++frame % FRAME_COUNT;
+        
+        frame += 1;
+        if ( frame  >= FRAME_COUNT*3 ) { // must be 3? to be slower
+            frame = 0;
+        }
+    }
+    else {
+        frame = 3;
     }
     
     return false;
