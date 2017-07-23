@@ -50,6 +50,7 @@ CP=cp
 CCADMIN=CCadmin
 res_dir_textures=${CND_DISTDIR}/${CONF}/${CND_PLATFORM_${CONF}}/Textures
 res_dir_sounds=${CND_DISTDIR}/${CONF}/${CND_PLATFORM_${CONF}}/Sounds
+res_dir_resources=${CND_DISTDIR}/${CONF}/${CND_PLATFORM_${CONF}}/Resources
 
 # build
 build: .build-post
@@ -60,8 +61,10 @@ build: .build-post
 .build-post: .build-impl
 	$(MKDIR) -p $(res_dir_textures)
 	$(MKDIR) -p $(res_dir_sounds)
+	$(MKDIR) -p $(res_dir_resources)
 	$(CP) Textures/* $(res_dir_textures)
 	$(CP) Sounds/* $(res_dir_sounds)
+	$(CP) Resources/* $(res_dir_resources)
 
 
 

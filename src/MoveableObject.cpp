@@ -39,7 +39,7 @@ bool MoveableObject::move( ) {
     //Move the dot left or right
     mPosX += mVelX;
     mCollider.x = mPosX;
-    std::cout << mVelX << "_" << mPosX << " " << getWidth() << " " << mPosX+getWidth() << " " << SCREEN_WIDTH << std::endl;
+    //std::cout << mVelX << "_" << mPosX << " " << getWidth() << " " << mPosX+getWidth() << " " << SCREEN_WIDTH << std::endl;
     //If the dot went too far to the left or right
     if ( (mPosX < 0) || (mPosX + getWidth() > App::GetWindowWidth()) ) {
         //move back

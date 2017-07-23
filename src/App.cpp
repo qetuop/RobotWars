@@ -118,6 +118,9 @@ bool App::Init( ) {
         mPlayerPtr->setWidth(30);
         mPlayerPtr->setHeight(30);
     }
+    
+    // Game map
+    
 
     return true;
 }
@@ -152,14 +155,35 @@ void App::Render( ) {
     Texture* texture = nullptr;
 
     // Background
-    texture = TextureBank::Get("tile");
-    if ( texture != nullptr ) {
-        for ( int x = 0; x < GetWindowWidth(); x += texture->GetWidth() ) {
-            for ( int y = 0; y < GetWindowHeight(); y += texture->GetHeight() ) {
-                texture->Render(x,y);
-            }
+//    texture = TextureBank::Get("tile");
+//    if ( texture != nullptr ) {
+//        for ( int x = 0; x < GetWindowWidth(); x += texture->GetWidth() ) {
+//            for ( int y = 0; y < GetWindowHeight(); y += texture->GetHeight() ) {
+//                texture->Render(x,y);
+//            }
+//        }
+//    }
+    
+    texture = TextureBank::Get("tileset");
+    for ( int row = 0; row < map.mapHeight; row++ ) {
+        for ( int col = 0; col < map.mapWidth; col++ ) {
+            // get tile #
+            int tileNum = map.getTile(row,col);
+            
+            // translate to clip
+            int tilecol = map.getClipX(tileNum);
+            int tilerow = map.getClipY(tileNum);
+            
+            // Destination / Source
+            //Render(int X, int Y, int Width, int Height, int SX, int SY, int SWidth, int SHeight)
+                    
+            // get texture
+            texture->Render(col*32, row*32, 32, 32,
+                    tilecol*32, tilerow*32, 32,32);
         }
     }
+    
+    
 
     // Players
     //texture = TextureBank::Get(mPlayerPtr->getSpriteName());

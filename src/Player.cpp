@@ -80,7 +80,7 @@ void Player::handle_input( SDL_GameController *controller ) {
         else if ( mFaceDirection > 135 || mFaceDirection < -135 ) mFaceDirection = 180;
         else if ( mFaceDirection > 45 && mFaceDirection < 135 ) mFaceDirection = 90;
         
-        std::cout << "mFaceDirection:  " << mFaceDirection << std::endl;
+        //std::cout << "mFaceDirection:  " << mFaceDirection << std::endl;
         mFaceDirection = 0;
         //fireBullet();
     }
@@ -120,7 +120,7 @@ void Player::handle_input( SDL_GameController *controller ) {
         else if ( mMoveDirection > 135 || mMoveDirection < -135 ) mMoveDirection = 180;
         else if ( mMoveDirection > 45 && mMoveDirection < 135 ) mMoveDirection = 90;
         
-        std::cout << "mMoveDirection:  " << mMoveDirection << std::endl;
+        //std::cout << "mMoveDirection:  " << mMoveDirection << std::endl;
         //fireBullet();
     }
     
@@ -166,7 +166,7 @@ void Player::handle_input( SDL_GameController *controller ) {
         // frame 
         //clip.x = frame*CLIP_SIZE;
         clip.x = (frame / FRAME_COUNT) * getWidth();
-        std::cout << "FRAME= " << frame << std::endl;
+        //std::cout << "FRAME= " << frame << std::endl;
         
         // mMoveDirection
         int y = 0;
