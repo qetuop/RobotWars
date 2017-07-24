@@ -103,7 +103,7 @@ void Player::handle_input( SDL_GameController *controller ) {
     if ( AButton == 1 ) {
         rightArm = "right_arm";
     }
-    if ( BButton == 1 ) {
+    else if ( BButton == 1 ) {
         rightArm = "right_arm2";
     }
 
@@ -210,14 +210,16 @@ void Player::handle_input( SDL_GameController *controller ) {
         
         headTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
         torsoTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
-        
-        if ( (int)mMoveDirection == 0 ) {
-            rightArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+        std::cout << "moveDirection= " << mMoveDirection << std::endl;
+        if ( (int)mMoveDirection == 0 ) { // EAST = RA on top = last  TEAL
+            
             leftArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+            rightArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
         }
-        else {
-            leftArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+        else { // WEST (or north/south) = LA on top = last GRAY
+            
             rightArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+            leftArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
         }
                 
         legTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
