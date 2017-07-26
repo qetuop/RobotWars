@@ -17,13 +17,13 @@
 
 const int JOYSTICK_DEAD_ZONE = 8000;
 
-static const int SCREEN_WIDTH = 1280; //1024;
-static const int SCREEN_HEIGHT = 720;//768;
+static const int SCREEN_WIDTH = 640;//1280; //1024;
+static const int SCREEN_HEIGHT = 480;//720;//768;
 
 //const int PLAYER_WIDTH = 80;
 //const int PLAYER_HEIGHT = 80;
 
-const int BULLET_RATE = 50; // TODO: this will be modifable
+const int BULLET_RATE = 10; // TODO: this will be modifable
 
 //The frame rate
 const int FRAMES_PER_SECOND = 60;

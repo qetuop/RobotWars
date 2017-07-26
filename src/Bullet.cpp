@@ -64,10 +64,10 @@ bool Bullet::move() {
     }
     
     // should this be in the stuck objects logic?
-    if ( checkCollision(App::GetInstance()->mNPCPtr->getCollider())) {
-        std::cout << "BULLET HIT BADDIE" << std::endl;
-        App::GetInstance()->mNPCPtr->hit();
-    }
+//    if ( checkCollision(App::GetInstance()->mNPCPtr->getCollider())) {
+//        std::cout << "BULLET HIT BADDIE" << std::endl;
+//        App::GetInstance()->mNPCPtr->hit();
+//    }
 
     return isAlive;
 

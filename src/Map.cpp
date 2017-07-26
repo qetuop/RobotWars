@@ -19,7 +19,7 @@ Map::Map() {
     tilesetColumns = tilesetJson["columns"].get<int>();
     tilecount = tilesetJson["tilecount"].get<int>();
     tilesetRows = ceil(tilecount / tilesetColumns);
-    std::cout << tilesetColumns << " " << tilesetRows << " " << tilecount << std::endl;
+    //std::cout << tilesetColumns << " " << tilesetRows << " " << tilecount << std::endl;
     
     // MAP
     std::ifstream map (mapName, std::ifstream::in);
@@ -29,14 +29,14 @@ Map::Map() {
     mapWidth = mapJson["width"].get<int>();
     tiles = mapJson["layers"][0]["data"].get<std::vector<int>>();
     
-    std::cout << mapWidth << " " << mapHeight << " " << tiles.size() << std::endl;        
+   // std::cout << mapWidth << " " << mapHeight << " " << tiles.size() << std::endl;        
 
 } // CTOR
 
 int Map::getTile(int row, int col) {
     // 4x8 grid
     // i = row * 4 + col
-    int index = row * mapHeight + col;
+    int index = row * mapWidth + col;
     return tiles[index] -1;  // TODO: change to something using firstgid?
 }
 

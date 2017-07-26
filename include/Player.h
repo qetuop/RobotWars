@@ -44,6 +44,8 @@ extern "C" {
         std::string leftArm;
         std::string rightArm;
         std::string leg;
+        
+        bool firing;
 
     public:
         Player();
@@ -58,6 +60,10 @@ extern "C" {
         virtual bool move();
         
         virtual std::string getSpriteName();
+        
+        void fireBullet();
+        void updateBullets();
+        
     };
 
 

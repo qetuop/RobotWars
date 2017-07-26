@@ -140,7 +140,7 @@ void App::Loop( ) {
         mPlayerPtr->move();
         //mPlayerPtr->checkCollision(mNPCPtr->getCollider());
 
-        //mPlayerPtr->updateBullets();
+        mPlayerPtr->updateBullets();
     }
 }
 
@@ -189,14 +189,21 @@ void App::Render( ) {
     //texture = TextureBank::Get(mPlayerPtr->getSpriteName());
     texture = mPlayerPtr->getTexture(Renderer);
     
+    // Bullets!
+    // TODO: move the texture type into the Bullet class?  Just the identifier string bulletType
+    texture = TextureBank::Get("bullet");
     if ( texture != nullptr ) {
-
-        //SDL_Rect clip = mPlayerPtr->getClip();
-        //texture->render(Renderer, mPlayerPtr->mPosX, mPlayerPtr->mPosY,
-        //        &clip, mPlayerPtr->mFaceDirection);
+        for ( auto&& bullet : mPlayerPtr->mBullets ) {
+            if ( bullet != nullptr ) {
+                //texture->render(Renderer, bullet->mPosX, bullet->mPosY);
+                texture->render(Renderer, bullet->mPosX, bullet->mPosY,
+                NULL, bullet->mFaceDirection);
+            }
+        }
     } else {
-        logSDLError(std::cout, "App1::Render");
+        logSDLError(std::cout, "App::Render");
     }
+    
 
     int width = 0;
     int height = 0;
@@ -208,12 +215,17 @@ void App::Render( ) {
     // 16:9 aspect ratio resolutions:  1024×576, 1152×648, 1280×720, 1366×768, 1600×900, 1920×1080, 2560×1440 and 3840×2160.
     
     // 4:3
-    SDL_RenderSetLogicalSize(Renderer, 320, 240);
+    //SDL_RenderSetLogicalSize(Renderer, 320, 240);
     //SDL_RenderSetLogicalSize(Renderer, 400, 300);
-    //SDL_RenderSetLogicalSize(Renderer, 640, 480);
+    SDL_RenderSetLogicalSize(Renderer, 640, 480);
     //SDL_RenderSetLogicalSize(Renderer, 800, 600);
     //SDL_RenderSetLogicalSize(Renderer, 1024, 768);
     
+    // 16:10
+    //SDL_RenderSetLogicalSize(Renderer, 1280, 800);
+    //SDL_RenderSetLogicalSize(Renderer, 1680, 1050);
+    
+    // 16:9
     //SDL_RenderSetLogicalSize(Renderer, 1024, 576);
     //SDL_RenderSetLogicalSize(Renderer, 1280, 720);
     //SDL_RenderSetLogicalSize(Renderer, 1920, 1080);

@@ -25,6 +25,8 @@ Player::Player( ) {
     leftArm = "left_arm";
     rightArm = "right_arm";
     leg = "leg";
+    
+    firing = false;
 }
 
 Player::~Player( ) {
@@ -81,7 +83,7 @@ void Player::handle_input( SDL_GameController *controller ) {
         else if ( mFaceDirection > 45 && mFaceDirection < 135 ) mFaceDirection = 90;
         
         //std::cout << "mFaceDirection:  " << mFaceDirection << std::endl;
-        mFaceDirection = 0;
+        //mFaceDirection = 0;
         //fireBullet();
     }
 
@@ -97,7 +99,12 @@ void Player::handle_input( SDL_GameController *controller ) {
     //}
 
     if ( RightShoulder == 1 ) {
-//        fireBullet();
+        fireBullet();
+        firing = true;
+    }
+    if ( RightShoulder == 0 ) {
+
+        firing = false;
     }
     
     if ( AButton == 1 ) {
@@ -170,7 +177,7 @@ void Player::handle_input( SDL_GameController *controller ) {
         
         // mMoveDirection
         int y = 0;
-        switch ( (int)mMoveDirection ) {
+        switch ( (int)mFaceDirection ) {
             case 0:  // EAST
                 y = CLIP_SIZE*2;
                 break;
@@ -208,21 +215,23 @@ void Player::handle_input( SDL_GameController *controller ) {
         
         SDL_Rect clip = getClip();
         
-        headTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
-        torsoTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
-        std::cout << "moveDirection= " << mMoveDirection << std::endl;
-        if ( (int)mMoveDirection == 0 ) { // EAST = RA on top = last  TEAL
+        double filp = 0;
+        
+        headTx->render(Renderer, mPosX, mPosY, &clip, filp);
+        torsoTx->render(Renderer, mPosX, mPosY, &clip, filp);
+        
+        if ( (int)mFaceDirection == 0 ) { // EAST = RA on top = last  TEAL
             
-            leftArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
-            rightArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+            leftArmTx->render(Renderer, mPosX, mPosY, &clip, filp);
+            rightArmTx->render(Renderer, mPosX, mPosY, &clip, filp);
         }
         else { // WEST (or north/south) = LA on top = last GRAY
             
-            rightArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
-            leftArmTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+            rightArmTx->render(Renderer, mPosX, mPosY, &clip, filp);
+            leftArmTx->render(Renderer, mPosX, mPosY, &clip, filp);
         }
                 
-        legTx->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
+        legTx->render(Renderer, mPosX, mPosY, &clip, filp);
         
        
         
@@ -251,4 +260,29 @@ bool Player::move() {
     }
     
     return false;
+}
+
+void Player::fireBullet( ) {
+    if ( firing ) return;
+    // TODO: better way to get texture size then getting it each time?
+    Texture *texture = TextureBank::Get("bullet");
+    if ( texture != nullptr ){
+        //auto bullet = std::make_shared<Bullet>(mPosX + PLAYER_WIDTH / 2, mPosY + PLAYER_HEIGHT / 2, mDirection);
+        auto bullet = std::make_shared<Bullet>(mPosX, mPosY , mFaceDirection);
+        bullet->setHeight(texture->GetHeight());
+        bullet->setWidth(texture->GetWidth());
+        
+        mBullets.push_back(bullet);
+    }
+}
+
+void Player::updateBullets( ) {
+
+    for ( auto bulletItr = mBullets.begin(); bulletItr != mBullets.end(); ) {
+        if ( bulletItr->get()->move() == false ) {
+            bulletItr = mBullets.erase(bulletItr);
+        } else {
+            ++bulletItr;
+        }
+    }
 }
