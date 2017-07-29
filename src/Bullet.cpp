@@ -23,7 +23,7 @@ Bullet::Bullet() {
     mVelY = BULLET_RATE * sin(mFaceDirection);
 }
 
-Bullet::Bullet(int _x, int _y, double _direction) {
+Bullet::Bullet(int _x, int _y, double _direction, std::string name) {
     mPosX = _x;
     mPosY = _y;
 
@@ -31,6 +31,8 @@ Bullet::Bullet(int _x, int _y, double _direction) {
 
     mVelX = BULLET_RATE * cos(mFaceDirection * M_PI / 180);
     mVelY = BULLET_RATE * sin(mFaceDirection * M_PI / 180);
+    
+    mSpriteName = name;
     
 //     std::cout << "Bullet(): x = " << x 
 //             << ", y = " << y
@@ -54,7 +56,7 @@ bool Bullet::move() {
     mPosY += mVelY;
     mCollider.y = mPosY;
 
-    //std::cout << "Bullet::move::x = " << x << ", y = " << y << std::endl;
+    //std::cout << "Bullet::move::x = " << mPosX << ", y = " << mPosY << std::endl;
 
     // hits a wall
     if ((mPosX <= 0) || (mPosX >= App::GetWindowWidth())) {
@@ -72,4 +74,42 @@ bool Bullet::move() {
     return isAlive;
 
 } // move
+
+void Bullet::render(SDL_Renderer* Renderer) {
+        Texture *texture = TextureBank::Get(mSpriteName);
+               
+        SDL_Rect clip;
+        clip.x = clip.y = 0;
+        clip.h = clip.w = 32;
+        
+        if ( mSpriteName == "laser" ) {
+            int mod = 8;
+            //clip.h*=mod;
+            clip.w*=mod;
+            //mPosX/=mod/2;
+            //mPosY/=mod/2;
+//            if ( mFaceDirection == 0 || mFaceDirection == 180 ) {
+//                clip.w = 128;
+//            }
+//            else clip.h = 128;
+        }
+        
+        //double filp = 0;
+       
+        // render(SDL_Renderer *renderer, int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip) {
+            
+        SDL_Point center;
+        center.x = mPosX+16;
+        center.y = mPosY+16;
+        std::cout << "BULLET " << mPosX << " " << mPosY 
+               << ", clip: " << clip.x << " " << clip.y << " " << clip.w << " " << clip.h
+               << ", center: " << center.x << " " << center.y
+               << std::endl;
+        
+        texture->render(Renderer, mPosX, mPosY, &clip, mFaceDirection, &center);
+        //texture->Render(mPosX, mPosY, 64,64);
+        
+        //Render(int X, int Y, int Width, int Height, int SX, int SY, int SWidth, int SHeight)
+        //texture->Render(mPosX, mPosY, clip.w, clip.h, 0, 0, 32,32);
+    }
 

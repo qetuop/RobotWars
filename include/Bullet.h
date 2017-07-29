@@ -21,10 +21,13 @@ public:
   
 public:
     Bullet();
-    Bullet(int _x, int _y, double _direction);
+    Bullet(int _x, int _y, double _direction, std::string name);
     ~Bullet();
 
     bool move();
+    
+    void render(SDL_Renderer* Renderer);
+    
 };
 
 #endif /* BULLET_H */

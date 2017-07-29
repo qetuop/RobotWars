@@ -160,6 +160,7 @@ void App::Render( ) {
 //        for ( int x = 0; x < GetWindowWidth(); x += texture->GetWidth() ) {
 //            for ( int y = 0; y < GetWindowHeight(); y += texture->GetHeight() ) {
 //                texture->Render(x,y);
+//                //texture->Render(x, y, 32,32, 0, 0, 32,32);
 //            }
 //        }
 //    }
@@ -178,8 +179,8 @@ void App::Render( ) {
             //Render(int X, int Y, int Width, int Height, int SX, int SY, int SWidth, int SHeight)
                     
             // get texture
-            texture->Render(col*32, row*32, 32, 32,
-                    tilecol*32, tilerow*32, 32,32);
+            
+            //texture->Render(col*32, row*32, 32, 32, tilecol*32, tilerow*32, 32,32);
         }
     }
     
@@ -196,8 +197,12 @@ void App::Render( ) {
         for ( auto&& bullet : mPlayerPtr->mBullets ) {
             if ( bullet != nullptr ) {
                 //texture->render(Renderer, bullet->mPosX, bullet->mPosY);
-                texture->render(Renderer, bullet->mPosX, bullet->mPosY,
-                NULL, bullet->mFaceDirection);
+                //texture->render(Renderer, bullet->mPosX, bullet->mPosY, NULL, bullet->mFaceDirection);
+                
+                //texture->Render(bullet->mPosX, bullet->mPosY, 64, 64,
+                //    0, 0, 32,32);
+                
+                bullet->render(Renderer);
             }
         }
     } else {

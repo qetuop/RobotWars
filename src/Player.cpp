@@ -265,15 +265,20 @@ bool Player::move() {
 void Player::fireBullet( ) {
     if ( firing ) return;
     // TODO: better way to get texture size then getting it each time?
-    Texture *texture = TextureBank::Get("bullet");
-    if ( texture != nullptr ){
+    std::string name = "bullet";
+    if ( rightArm == "right_arm2" ) {
+        name = "laser";
+    }
+    
+    //Texture *texture = TextureBank::Get(name);
+    //if ( texture != nullptr ){
         //auto bullet = std::make_shared<Bullet>(mPosX + PLAYER_WIDTH / 2, mPosY + PLAYER_HEIGHT / 2, mDirection);
-        auto bullet = std::make_shared<Bullet>(mPosX, mPosY , mFaceDirection);
+        auto bullet = std::make_shared<Bullet>(mPosX, mPosY , mFaceDirection, name);
         bullet->setHeight(texture->GetHeight());
         bullet->setWidth(texture->GetWidth());
         
         mBullets.push_back(bullet);
-    }
+    //}
 }
 
 void Player::updateBullets( ) {

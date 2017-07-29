@@ -68,13 +68,13 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 }
 
 //------------------------------------------------------------------------------
-
+// sdltutorials render function
 void Texture::Render(int X, int Y) {
     Render(X, Y, Width, Height);
 }
 
 //------------------------------------------------------------------------------
-
+// sdltutorials render function
 void Texture::Render(int X, int Y, int Width, int Height) {
     SDL_Rect Destination = {X, Y, Width, Height};
 
@@ -82,22 +82,22 @@ void Texture::Render(int X, int Y, int Width, int Height) {
 }
 
 //------------------------------------------------------------------------------
-
+// sdltutorials render function
 void Texture::Render(int X, int Y, int Width, int Height, int SX, int SY, int SWidth, int SHeight) {
     SDL_Rect Source = {SX, SY, SWidth, SHeight};
     SDL_Rect Destination = {X, Y, Width, Height};
-
+    //std::cout << "ST Render " << Renderer << std::endl;
     SDL_RenderCopy(Renderer, SDLTexture, &Source, &Destination);
 }
 
 //------------------------------------------------------------------------------
-
+// LazyFoo render function - can be used for rotate/flip
 void Texture::render(SDL_Renderer *renderer,
         int x, int y, SDL_Rect* clip,
         double angle, SDL_Point* center, SDL_RendererFlip flip) {
     
 //    std::cout << x << " " << y << " " << mWidth << " " << mHeight << " " << angle <<  std::endl;
-    
+    //std::cout << "LF Render " << renderer << std::endl;
     //Set rendering space and render to screen
     SDL_Rect renderQuad = {x, y, Width, Height};
 
