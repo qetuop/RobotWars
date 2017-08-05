@@ -18,7 +18,7 @@ using json = nlohmann::json;
 #define MAP_H
 
 // TODO: create TileSet, Map Class.  rename this to GameMapData?
-class Map {
+class MapUtil {
 public:
     std::string tilesetName;
     std::string mapName;
@@ -32,7 +32,7 @@ public:
     std::vector<int> tiles;
     
 public:
-    Map();
+    MapUtil();
     int getTile(int row, int col);
     int getClipX(int tileNum);
     int getClipY(int tileNum);

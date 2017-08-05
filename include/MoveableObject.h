@@ -43,7 +43,10 @@ public:
     std::string mSpriteName;
 
     // collision box
-    SDL_Rect mCollider;
+    SDL_Rect mCollider; // just for movement and env?  partial size
+    
+    // bounding box
+    SDL_Rect mBounder;  // for attacks? - entire size
     
 //    int WALKING_ANIMATION_FRAMES = 3;
 //    SDL_Rect gSpriteClips[4][WALKING_ANIMATION_FRAMES];
@@ -63,7 +66,7 @@ public:
     void setHeight(int _height);
     void setWidth(int _width);
     
-    SDL_Rect getCollider();
+    SDL_Rect getBounder();
     
     bool checkCollision( SDL_Rect targetRect );
     

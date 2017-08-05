@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-#include "Map.h"
+#include "MapUtil.h"
 #include <fstream>
 #include <math.h>
 
-Map::Map() {
+MapUtil::MapUtil() {
     tilesetName = "/home/brian/NetBeansProjects/SDL/RobotWars/Resources/robot_wars_tileset.json";
     mapName = "/home/brian/NetBeansProjects/SDL/RobotWars/Resources/robot_wars_map.json";
             
@@ -33,17 +33,17 @@ Map::Map() {
 
 } // CTOR
 
-int Map::getTile(int row, int col) {
+int MapUtil::getTile(int row, int col) {
     // 4x8 grid
     // i = row * 4 + col
     int index = row * mapWidth + col;
     return tiles[index] -1;  // TODO: change to something using firstgid?
 }
 
-int Map::getClipX(int tileNum) {
+int MapUtil::getClipX(int tileNum) {
     return tileNum % tilesetColumns;    // % is the "modulo operator", the remainder of i / width;
 }
 
-int Map::getClipY(int tileNum) {
+int MapUtil::getClipY(int tileNum) {
     return tileNum / tilesetColumns;    // % is the "modulo operator", the remainder of i / width;
 }

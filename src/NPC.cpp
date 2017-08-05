@@ -19,8 +19,8 @@ NPC::NPC( ) {
     mPosX = 0;
     mPosY = 0;
     
-    mCollider.x = mPosX;
-    mCollider.y = mPosY;
+    mBounder.x = mPosX;
+    mBounder.y = mPosY;
     
     mSpriteName = "attacker_";   
     

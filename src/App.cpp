@@ -112,12 +112,14 @@ bool App::Init( ) {
     }
 
     // The Players
-    Texture *texture = TextureBank::Get("somecharacters");
-    if ( texture != nullptr ) {
+
         mPlayerPtr = std::make_shared<Player>();
         mPlayerPtr->setWidth(30);
         mPlayerPtr->setHeight(30);
-    }
+        mPlayerPtr->mPosX = 5*32; // pix
+        mPlayerPtr->mPosY = 6*32;
+    
+
     
     // Game map
     
@@ -155,6 +157,8 @@ void App::Render( ) {
     Texture* texture = nullptr;
 
     // Background
+    
+    // SOLID background
 //    texture = TextureBank::Get("tile");
 //    if ( texture != nullptr ) {
 //        for ( int x = 0; x < GetWindowWidth(); x += texture->GetWidth() ) {
@@ -165,6 +169,7 @@ void App::Render( ) {
 //        }
 //    }
     
+    // ACTUAL background
     texture = TextureBank::Get("tileset");
     for ( int row = 0; row < map.mapHeight; row++ ) {
         for ( int col = 0; col < map.mapWidth; col++ ) {
@@ -177,10 +182,7 @@ void App::Render( ) {
             
             // Destination / Source
             //Render(int X, int Y, int Width, int Height, int SX, int SY, int SWidth, int SHeight)
-                    
-            // get texture
-            
-            //texture->Render(col*32, row*32, 32, 32, tilecol*32, tilerow*32, 32,32);
+            texture->Render(col*32, row*32, 32, 32, tilecol*32, tilerow*32, 32,32);
         }
     }
     

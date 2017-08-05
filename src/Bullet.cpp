@@ -51,10 +51,10 @@ bool Bullet::move() {
     bool isAlive = true;
     
     mPosX += mVelX;
-    mCollider.x = mPosX;
+    mBounder.x = mPosX;
     
     mPosY += mVelY;
-    mCollider.y = mPosY;
+    mBounder.y = mPosY;
 
     //std::cout << "Bullet::move::x = " << mPosX << ", y = " << mPosY << std::endl;
 

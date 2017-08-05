@@ -10,7 +10,7 @@
 #include "Player.h"
 #include "NPC.h"
 #include "Timer.h"
-#include "Map.h"
+#include "MapUtil.h"
 
 
 #include <memory>
@@ -61,7 +61,7 @@ private:
     //The sound effects that will be used
      Mix_Chunk *mPew = NULL;
      
-     Map map;
+     MapUtil map;
 
 private:
     //    public:
