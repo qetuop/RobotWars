@@ -76,3 +76,7 @@ void Sprite::setPosY(int y) {
     //posY      = coordY * height;
     bounder.y = posY;    
 }
+
+SDL_Rect* Sprite::getBounder() {
+    return &bounder;
+}

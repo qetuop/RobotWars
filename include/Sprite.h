@@ -58,6 +58,8 @@ public:
     void setPosX(int x);
     void setPosY(int y);
     
+    SDL_Rect* getBounder();
+    
     // ?? render(??)  or  Texture* getTexture(??)
     // update()  --> only those sprites in the camera view will need to?
 

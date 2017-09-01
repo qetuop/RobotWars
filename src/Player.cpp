@@ -18,7 +18,7 @@ Player::Player( ) {
     std::cout << "Player created " << std::endl;
 
     frame = 0;
-    mSpriteName = "somecharacters" ;
+    //mSpriteName = "somecharacters" ;
     
     head = "head";
     torso = "torso";
@@ -37,7 +37,10 @@ Player::~Player( ) {
 void Player::handle_input( SDL_GameController *controller ) {
     
     // TODO: need an update() type function
-    
+    double faceDir = 0.0;
+    double moveDir = 0.0;
+    int velX = 0;
+    int velY = 0;
     
 
     // DPAD
@@ -74,13 +77,13 @@ void Player::handle_input( SDL_GameController *controller ) {
 
     if ( ((StickRightX < -JOYSTICK_DEAD_ZONE) || (StickRightX > JOYSTICK_DEAD_ZONE)) || 
          ((StickRightY < -JOYSTICK_DEAD_ZONE) || (StickRightY > JOYSTICK_DEAD_ZONE)) ) {
-        mFaceDirection = atan2((double) StickRightY, (double) StickRightX) * (180.0 / M_PI);
+        faceDir = atan2((double) StickRightY, (double) StickRightX) * (180.0 / M_PI);
         
         
-        if      ( mFaceDirection > -45 && mFaceDirection < 45 ) mFaceDirection = 0;
-        else if ( mFaceDirection > -135 && mFaceDirection < -45 ) mFaceDirection = -90;
-        else if ( mFaceDirection > 135 || mFaceDirection < -135 ) mFaceDirection = 180;
-        else if ( mFaceDirection > 45 && mFaceDirection < 135 ) mFaceDirection = 90;
+        if      ( faceDir > -45 && faceDir < 45 ) faceDir = 0;
+        else if ( faceDir > -135 && faceDir < -45 ) faceDir = -90;
+        else if ( faceDir > 135 || faceDir < -135 ) faceDir = 180;
+        else if ( faceDir > 45 && faceDir < 135 ) faceDir = 90;
         
         //std::cout << "mFaceDirection:  " << mFaceDirection << std::endl;
         //mFaceDirection = 0;
@@ -120,43 +123,54 @@ void Player::handle_input( SDL_GameController *controller ) {
 
     if ( ((StickLeftX < -JOYSTICK_DEAD_ZONE) || (StickLeftX > JOYSTICK_DEAD_ZONE)) || 
          ((StickLeftY < -JOYSTICK_DEAD_ZONE) || (StickLeftY > JOYSTICK_DEAD_ZONE)) ) {
-        mMoveDirection = atan2((double) StickLeftY, (double) StickLeftX) * (180.0 / M_PI);
+        moveDir = atan2((double) StickLeftY, (double) StickLeftX) * (180.0 / M_PI);
         
-        if      ( mMoveDirection > -45 && mMoveDirection < 45 ) mMoveDirection = 0;
-        else if ( mMoveDirection > -135 && mMoveDirection < -45 ) mMoveDirection = -90;
-        else if ( mMoveDirection > 135 || mMoveDirection < -135 ) mMoveDirection = 180;
-        else if ( mMoveDirection > 45 && mMoveDirection < 135 ) mMoveDirection = 90;
+        if      ( moveDir > -45 && moveDir < 45 ) moveDir = 0;
+        else if ( moveDir > -135 && moveDir < -45 ) moveDir = -90;
+        else if ( moveDir > 135 || moveDir < -135 ) moveDir = 180;
+        else if ( moveDir > 45 && moveDir < 135 ) moveDir = 90;
         
         //std::cout << "mMoveDirection:  " << mMoveDirection << std::endl;
         //fireBullet();
+
     }
     
     // If the X axis is neutral
     if ( (StickLeftX > -JOYSTICK_DEAD_ZONE) && (StickLeftX < JOYSTICK_DEAD_ZONE) ) {
-        mVelX = 0;
+        velX = 0;
     }// Adjust the velocity
     else {
         if ( StickLeftX < 0 ) {
-            mVelX = -getWidth() / SPEED;
+            velX = -getWidth() / SPEED;
         } else {
-            mVelX = getWidth() / SPEED;
+            velX = getWidth() / SPEED;
         }
     }
 
     // If the Y axis is neutral
     if ( (StickLeftY > -JOYSTICK_DEAD_ZONE) && (StickLeftY < JOYSTICK_DEAD_ZONE) ) {
-        mVelY = 0;
+        velY = 0;
     }// Adjust the velocity
     else {
         if ( StickLeftY < 0 ) {
-            mVelY = -getHeight() / SPEED;
+            velY = -getHeight() / SPEED;
         } else {
-            mVelY = getHeight() / SPEED;
+            velY = getHeight() / SPEED;
         }
     }
 
     //std::cout << "xVel: " << xVel << ", yVel: " << yVel << ", direction: " << direction << std::endl;
+    
+
+    mover.setFaceDirection(faceDir);
+    mover.setMoveDirection(moveDir);
+    mover.setVelX(velX);
+    mover.setVelY(velY);
+    
 } // handle_input
+
+
+
 
     //          -90
     //     -135  |  -45
@@ -177,7 +191,7 @@ void Player::handle_input( SDL_GameController *controller ) {
         
         // mMoveDirection
         int y = 0;
-        switch ( (int)mFaceDirection ) {
+        switch ( (int)mover.getFaceDirection() ) {
             case 0:  // EAST
                 y = CLIP_SIZE*2;
                 break;
@@ -217,21 +231,21 @@ void Player::handle_input( SDL_GameController *controller ) {
         
         double filp = 0;
         
-        headTx->render(Renderer, mPosX, mPosY, &clip, filp);
-        torsoTx->render(Renderer, mPosX, mPosY, &clip, filp);
+        headTx->render(Renderer, getPosX(), getPosY(), &clip, filp);
+        torsoTx->render(Renderer, getPosX(), getPosY(), &clip, filp);
         
-        if ( (int)mFaceDirection == 0 ) { // EAST = RA on top = last  TEAL
+        if ( (int)mover.getFaceDirection() == 0 ) { // EAST = RA on top = last  TEAL
             
-            leftArmTx->render(Renderer, mPosX, mPosY, &clip, filp);
-            rightArmTx->render(Renderer, mPosX, mPosY, &clip, filp);
+            leftArmTx->render(Renderer, getPosX(), getPosY(), &clip, filp);
+            rightArmTx->render(Renderer, getPosX(), getPosY(), &clip, filp);
         }
         else { // WEST (or north/south) = LA on top = last GRAY
             
-            rightArmTx->render(Renderer, mPosX, mPosY, &clip, filp);
-            leftArmTx->render(Renderer, mPosX, mPosY, &clip, filp);
+            rightArmTx->render(Renderer, getPosX(), getPosY(), &clip, filp);
+            leftArmTx->render(Renderer, getPosX(), getPosY(), &clip, filp);
         }
                 
-        legTx->render(Renderer, mPosX, mPosY, &clip, filp);
+        legTx->render(Renderer, getPosX(), getPosY(), &clip, filp);
         
        
         
@@ -239,15 +253,21 @@ void Player::handle_input( SDL_GameController *controller ) {
         return texture;
     }
     
-std::string Player::getSpriteName() {
-    return mSpriteName;// + std::to_string(frame);
-}
+//std::string Player::getSpriteName() {
+//    return mSpriteName;// + std::to_string(frame);
+//}
 
 bool Player::move() {
-    MoveableObject::move();
+    
+    // TODO DIX THIS - THIS IS A HAXK
+    int *posX = new int(getPosX());
+    int *posY = new int(getPosY());
+    mover.move(posX, posY, getBounder());
+    setPosX(*posX);
+    setPosY(*posY);
     
     // TODO: better way
-    if ( mVelX != 0 || mVelY != 0) {
+    if ( mover.getVelX() != 0 || mover.getVelY() != 0) {
         //frame = ++frame % FRAME_COUNT;
         
         frame += 1;
@@ -273,7 +293,7 @@ void Player::fireBullet( ) {
     //Texture *texture = TextureBank::Get(name);
     //if ( texture != nullptr ){
         //auto bullet = std::make_shared<Bullet>(mPosX + PLAYER_WIDTH / 2, mPosY + PLAYER_HEIGHT / 2, mDirection);
-        auto bullet = std::make_shared<Bullet>(mPosX, mPosY , mFaceDirection, name);
+        auto bullet = std::make_shared<Bullet>(getPosX(), getPosY() , mover.getFaceDirection(), name);
         bullet->setHeight(texture->GetHeight());
         bullet->setWidth(texture->GetWidth());
         

@@ -116,8 +116,8 @@ bool App::Init( ) {
         mPlayerPtr = std::make_shared<Player>();
         mPlayerPtr->setWidth(30);
         mPlayerPtr->setHeight(30);
-        mPlayerPtr->mPosX = 5*32; // pix
-        mPlayerPtr->mPosY = 6*32;
+        mPlayerPtr->setPosX(5*32);// = 5*32; // pix
+        mPlayerPtr->setPosY(6*32);
     
 
     

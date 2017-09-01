@@ -34,3 +34,34 @@ bool Movement::move(int *posX, int *posY, SDL_Rect *bounder) {
     
     return false;
 }
+
+int Movement::getVelX() {
+    return velX;
+}
+void Movement::setVelX(int i) {
+    velX = i;
+}
+
+int Movement::getVelY() {
+    return velY;
+}
+
+void Movement::setVelY(int i) {
+    velY = i;
+}
+    
+double Movement::getFaceDirection() {
+    return faceDirection;
+}
+
+void Movement::setFaceDirection(double d) {
+    faceDirection = d;
+}
+
+double Movement::getMoveDirection() {
+    return moveDirection;
+}
+
+void Movement::setMoveDirection(double d) {
+    moveDirection = d;
+}

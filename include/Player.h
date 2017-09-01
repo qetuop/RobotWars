@@ -17,6 +17,8 @@
 
 #include "Bullet.h"
 #include "Character.h"
+#include "Sprite.h"
+#include "Movement.h"
 
 #include "Texture.h"
 
@@ -27,7 +29,7 @@
 extern "C" {
 #endif
 
-    class Player : public Character {
+    class Player : public Sprite {
     public:
 
         //bool firing;
@@ -46,6 +48,8 @@ extern "C" {
         std::string leg;
         
         bool firing;
+        
+        Movement mover;
 
     public:
         Player();
@@ -59,7 +63,7 @@ extern "C" {
         
         virtual bool move();
         
-        virtual std::string getSpriteName();
+        //virtual std::string getSpriteName();
         
         void fireBullet();
         void updateBullets();

@@ -35,6 +35,18 @@ private:
 public:
     bool move(int *posX, int *posY, SDL_Rect *bounder);
     
+    int getVelX();
+    void setVelX(int i);
+    
+    int getVelY();
+    void setVelY(int i);
+    
+    double getFaceDirection();
+    void setFaceDirection(double d);
+    
+    double getMoveDirection();        
+    void setMoveDirection(double d);
+    
 }; // Movement
     
     
