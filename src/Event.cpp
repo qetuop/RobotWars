@@ -207,7 +207,7 @@ void Event::OnLButtonDown(int mx, int my) {
 }
 
 void Event::OnLButtonUp(int mx, int my) {
-    //printf("Left Click unpressed in x:%d\ty:%d\n", mx, my);
+    printf("Left Click unpressed in x:%d\ty:%d\n", mx, my);
 }
 
 void Event::OnRButtonDown(int mx, int my) {

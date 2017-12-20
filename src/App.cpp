@@ -135,15 +135,24 @@ void App::shoot( ) {
 //------------------------------------------------------------------------------
 
 void App::Loop( ) {
+    // Gamepad
     if ( mGameController != nullptr && SDL_GameControllerGetAttached(mGameController) ) {
         // NOTE: We have a mGameController with index ControllerIndex.
 
         mPlayerPtr->handle_input(mGameController);
-        mPlayerPtr->move();
+        //mPlayerPtr->move();
         //mPlayerPtr->checkCollision(mNPCPtr->getCollider());
 
-        mPlayerPtr->updateBullets();
+        //mPlayerPtr->updateBullets();
     }
+    // keyboard/mouse
+    else {
+        mPlayerPtr->handle_input();
+    }
+    
+    mPlayerPtr->move();
+    mPlayerPtr->updateBullets();
+        
 }
 
 //------------------------------------------------------------------------------

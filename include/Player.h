@@ -57,6 +57,7 @@ extern "C" {
              
         
         void handle_input(SDL_GameController *controller);
+        void handle_input();
 
         SDL_Rect getClip();
         Texture* getTexture(SDL_Renderer* Renderer);
