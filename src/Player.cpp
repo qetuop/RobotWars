@@ -363,6 +363,8 @@ bool Player::move( ) {
     } else {
         frame = 3;
     }
+    
+    //std::cout << "POS(x,y)=(" << getPosX() << "," << getPosY() << std::endl;
 
     return false;
 }

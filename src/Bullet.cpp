@@ -106,7 +106,10 @@ void Bullet::render(SDL_Renderer* Renderer) {
                << ", center: " << center.x << " " << center.y
                << std::endl;
         
-        texture->render(Renderer, mPosX, mPosY, &clip, mFaceDirection, &center);
+        double flip = 0;
+        //legTx->render(Renderer, getPosX(), getPosY(), &clip, filp);
+        //texture->render(Renderer, mPosX, mPosY, &clip, mFaceDirection, &center);  // center screws things up???
+        texture->render(Renderer, mPosX, mPosY, &clip, mFaceDirection);
         //texture->Render(mPosX, mPosY, 64,64);
         
         //Render(int X, int Y, int Width, int Height, int SX, int SY, int SWidth, int SHeight)

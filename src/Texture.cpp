@@ -1,7 +1,7 @@
 //==============================================================================
 #include "Texture.h"
 #include "Log.h"
-
+#include <string>
 //==============================================================================
 
 Texture::Texture() {
@@ -96,7 +96,6 @@ void Texture::render(SDL_Renderer *renderer,
         int x, int y, SDL_Rect* clip,
         double angle, SDL_Point* center, SDL_RendererFlip flip) {
     
-//    std::cout << x << " " << y << " " << mWidth << " " << mHeight << " " << angle <<  std::endl;
     //std::cout << "LF Render " << renderer << std::endl;
     //Set rendering space and render to screen
     SDL_Rect renderQuad = {x, y, Width, Height};
