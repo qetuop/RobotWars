@@ -101,10 +101,10 @@ void Bullet::render(SDL_Renderer* Renderer) {
         SDL_Point center;
         center.x = mPosX+16;
         center.y = mPosY+16;
-        std::cout << "BULLET " << mPosX << " " << mPosY 
-               << ", clip: " << clip.x << " " << clip.y << " " << clip.w << " " << clip.h
-               << ", center: " << center.x << " " << center.y
-               << std::endl;
+//        std::cout << "BULLET " << mPosX << " " << mPosY 
+//               << ", clip: " << clip.x << " " << clip.y << " " << clip.w << " " << clip.h
+//               << ", center: " << center.x << " " << center.y
+//               << std::endl;
         
         double flip = 0;
         //legTx->render(Renderer, getPosX(), getPosY(), &clip, filp);
