@@ -380,7 +380,7 @@ void Player::fireBullet( ) {
     //Texture *texture = TextureBank::Get(name);
     //if ( texture != nullptr ){
     //auto bullet = std::make_shared<Bullet>(mPosX + PLAYER_WIDTH / 2, mPosY + PLAYER_HEIGHT / 2, mDirection);
-    auto bullet = std::make_shared<Bullet>(getPosX(), getPosY(), mover.getFaceDirection(), name);
+    auto bullet = std::make_shared<Bullet>(getPosX(), getPosY(), mover.getFaceDirection(), name, this);
     bullet->setHeight(texture->GetHeight());
     bullet->setWidth(texture->GetWidth());
 

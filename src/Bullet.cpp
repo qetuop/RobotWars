@@ -18,9 +18,22 @@
 
 
 Bullet::Bullet() {
-    // do once
+    // do once...why?
     mVelX = BULLET_RATE * cos(mFaceDirection);
     mVelY = BULLET_RATE * sin(mFaceDirection);
+}
+Bullet::Bullet(int _x, int _y, double _direction, std::string name, Player *p) {
+    mPosX = _x;
+    mPosY = _y;
+
+    mFaceDirection = (int)_direction;
+
+    mVelX = BULLET_RATE * cos(mFaceDirection * M_PI / 180);
+    mVelY = BULLET_RATE * sin(mFaceDirection * M_PI / 180);
+    
+    mSpriteName = name;
+    
+    player = p;
 }
 
 Bullet::Bullet(int _x, int _y, double _direction, std::string name) {
@@ -50,10 +63,18 @@ Bullet::~Bullet() {
 bool Bullet::move() {
     bool isAlive = true;
     
-    mPosX += mVelX;
+    if ( mSpriteName == "laser" ) {
+        mPosX = player->getPosX();
+        mPosY = player->getPosY();
+    }
+    else {
+        mPosX += mVelX;
+        mPosY += mVelY;
+    }
+    
     mBounder.x = mPosX;
     
-    mPosY += mVelY;
+    
     mBounder.y = mPosY;
 
     //std::cout << "Bullet::move::x = " << mPosX << ", y = " << mPosY << std::endl;
